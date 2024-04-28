@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -12,10 +13,7 @@ public class Exam {
     private Integer creator;
     private Boolean isPublished;
     private String examName;
-    private Timestamp startTime;
-    private Timestamp endTime;
-    private Boolean isEncrypted;
-    private String passwordHash; // MD5
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     private String introduction;
-    private String comment;
 }

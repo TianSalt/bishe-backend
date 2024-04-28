@@ -39,10 +39,7 @@ CREATE TABLE exam
     exam_name     VARCHAR(255),
     start_time    DATETIME,
     end_time      DATETIME,
-    is_encrypted  BOOLEAN,
-    password_hash VARCHAR(256),
     introduction  TEXT,
-    comment       TEXT,
     FOREIGN KEY (creator) REFERENCES teacher (uid)
 ) DEFAULT CHARSET = utf8;
 
@@ -65,13 +62,15 @@ CREATE TABLE student_exam
 
 CREATE TABLE exam_question
 (
-    question_index INT,
     exam_id        INT,
+    question_index INT,
     question_id    INT,
     score          INT,
     FOREIGN KEY (exam_id) REFERENCES exam (exam_id),
-    FOREIGN KEY (question_id) REFERENCES question (question_id)
+    FOREIGN KEY (question_id) REFERENCES question (question_id),
+    PRIMARY KEY (exam_id, question_index)
 );
+
 
 CREATE TABLE student_exam_question
 (
@@ -84,12 +83,3 @@ CREATE TABLE student_exam_question
     FOREIGN KEY (exam_id) REFERENCES exam (exam_id),
     FOREIGN KEY (question_id) REFERENCES question (question_id)
 ) DEFAULT CHARSET = utf8;
-
-
--- Add indexes to the student_id and employee_id columns
-ALTER TABLE student
-    ADD INDEX idx_student_id (student_id);
-ALTER TABLE teacher
-    ADD INDEX idx_employee_id (employee_id);
-ALTER TABLE question
-    ADD INDEX idx_question_id (question_id);

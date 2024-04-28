@@ -3,13 +3,15 @@ package moe.seclan.backend.mapper;
 import moe.seclan.backend.pojo.Exam;
 import org.apache.ibatis.annotations.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Mapper
 public interface ExamMapper {
 
-    @Select("SELECT * FROM exam")
-    List<Exam> getAll();
+
+    List<Exam> get(Integer examId, Integer creator, Boolean isPublished,
+                   String examName, LocalDateTime fromTime, LocalDateTime toTime);
 
 //    @Select("SELECT * FROM exam WHERE creator = #{teacherUid}")
 //    List<Exam> getByTeacherUid(Integer teacherUid);
@@ -25,10 +27,7 @@ public interface ExamMapper {
         exam_name,
         start_time,
         end_time,
-        is_encrypted,
-        password_hash,
-        introduction,
-        comment
+        introduction
     )
     VALUES (
         #{creator},
@@ -36,10 +35,7 @@ public interface ExamMapper {
         #{examName},
         #{startTime},
         #{endTime},
-        #{isEncrypted},
-        #{passwordHash},
-        #{introduction},
-        #{comment}
+        #{introduction}
     )
 """)
     void insert(Exam exam);
@@ -53,12 +49,9 @@ public interface ExamMapper {
             exam_name = #{examName},
             start_time = #{tartTime},
             end_time = #{endTime},
-            is_encrypted = #{isEncrypted},
-            password_hash = #{passwordHash},
-            introduction = #{introduction},
-            comment = #{comment}
+            introduction = #{introduction}
         WHERE exam_id = #{examId}
         """)
-    void update(Integer examId, Exam exam);
+    void update(Exam exam);
 
 }

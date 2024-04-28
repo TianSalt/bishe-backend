@@ -5,10 +5,8 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class Student {
+public class Admin {
     private Integer uid;
-    private String studentId;
-    private String name;
-    private String major;
-    private String schoolClass;
+    private String username;
+    private String passwordHash;
 }

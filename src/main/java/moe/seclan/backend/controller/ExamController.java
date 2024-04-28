@@ -8,6 +8,7 @@ import moe.seclan.backend.service.ExamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -19,17 +20,19 @@ public class ExamController {
     private ExamService examService;
 
     @GetMapping
-    public Result getAll() {
-        log.info("GET all exams");
-        return Result.success(examService.getAll());
+    public Result get(Integer examId, Integer creator, Boolean isPublished,
+                      String examName, LocalDateTime fromTime, LocalDateTime toTime) {
+        log.info("GET exam by {}, {}, {}, {}, {}, {}",
+                examId, creator, isPublished, examName, fromTime, toTime);
+        List<Exam> list = examService.get(examId, creator, isPublished, examName, fromTime, toTime);
+        return Result.success(list);
     }
 
-//    @GetMapping("/{teacherUid}")
-//    public Result getByTeacherUid(@PathVariable("teacherUid") Integer teacherUid) {
-//        log.info("GET by teacher uid: {}", teacherUid);
-//        List<Exam> list = examService.getByTeacherUid(teacherUid);
-//        return Result.success(list);
-//    }
+    @GetMapping("/{examId}")
+    public Result getById(@PathVariable Integer examId) {
+        log.info("GET exam by {}", examId);
+        return Result.success(examService.getById(examId));
+    }
 
     @DeleteMapping("/{examId}")
     public Result delete(@PathVariable Integer examId) {
@@ -45,11 +48,10 @@ public class ExamController {
         return Result.success();
     }
 
-    @PutMapping("/{examId}")
-    public Result update(@PathVariable Integer examId, @RequestBody Exam exam) {
-        log.info("UPDATE exam with id {} to {}", examId, exam);
-        examService.update(examId, exam);
+    @PutMapping
+    public Result update(@RequestBody Exam exam) {
+        log.info("UPDATE exam {}", exam);
+        examService.update(exam);
         return Result.success();
     }
-
 }

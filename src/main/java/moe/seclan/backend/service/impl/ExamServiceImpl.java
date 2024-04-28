@@ -6,6 +6,7 @@ import moe.seclan.backend.service.ExamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -15,14 +16,15 @@ public class ExamServiceImpl implements ExamService {
     private ExamMapper examMapper;
 
     @Override
-    public List<Exam> getAll() {
-        return examMapper.getAll();
+    public List<Exam> get(Integer examId, Integer creator, Boolean isPublished,
+                          String examName, LocalDateTime fromTime, LocalDateTime toTime) {
+        return examMapper.get(examId, creator, isPublished, examName, fromTime, toTime);
     }
 
-//    @Override
-//    public List<Exam> getByTeacherUid(Integer teacherUid) {
-//        return examMapper.getByTeacherUid(teacherUid);
-//    }
+    @Override
+    public Exam getById(Integer examId) {
+        return get(examId, null, null, null, null, null).get(0);
+    }
 
     @Override
     public void delete(Integer id) {
@@ -35,8 +37,8 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
-    public void update(Integer id, Exam exam) {
-        examMapper.update(id ,exam);
+    public void update(Exam exam) {
+        examMapper.update(exam);
     }
 
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="moe.seclan.backend.mapper.ExamMapper">
+    <select id="get" resultType="moe.seclan.backend.pojo.Exam">
+        select *
+        from exam
+        <where>
+            <if test="examId != null">
+                exam_id = #{examId}
+            </if>
+            <if test="creator != null">
+                and creator = #{creator}
+            </if>
+            <if test="isPublished != null">
+                and is_published = #{isPublished}
+            </if>
+            <if test="examName != null and examName != ''">
+                and exam_name like concat('%', #{examName}, '%')
+            </if>
+            <if test="fromTime != null">
+                and end_time > #{fromTime}
+            </if>
+            <if test="toTime != null">
+                and #{toTime} > start_time
+            </if>
+        </where>
+    </select>
+</mapper>

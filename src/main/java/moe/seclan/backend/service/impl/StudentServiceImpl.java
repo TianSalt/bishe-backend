@@ -15,20 +15,30 @@ public class StudentServiceImpl implements StudentService {
     private StudentMapper studentMapper;
 
     @Override
-    public PageBean getPages(String name, String major, String schoolClass, Integer page, Integer size) {
+    public PageBean getPages(String studentId, String name, String major, String schoolClass, Integer page, Integer size) {
         Integer count = studentMapper.count();
-        List<Student> studentList = studentMapper.getPages(name, major, schoolClass, (page - 1) * size, size);
+        List<Student> studentList = studentMapper.getPages(studentId, name, major, schoolClass, (page - 1) * size, size);
         return new PageBean(count, studentList);
     }
 
     @Override
-    public void delete(Integer studentId) {
-        studentMapper.delete(studentId);
+    public Student getStudent(Integer uid) {
+        return studentMapper.getStudent(uid);
     }
 
     @Override
-    public void insert(Student student) {
-        studentMapper.insert(student);
+    public void delete(Integer uid) {
+        studentMapper.delete(uid);
+    }
+
+    @Override
+    public Integer insert(Student student) {
+        return studentMapper.insert(student);
+    }
+
+    @Override
+    public Integer update(Student student) {
+        return studentMapper.update(student);
     }
 
 

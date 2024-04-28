@@ -3,6 +3,7 @@ package moe.seclan.backend.controller;
 import lombok.extern.slf4j.Slf4j;
 import moe.seclan.backend.pojo.PageBean;
 import moe.seclan.backend.pojo.Result;
+import moe.seclan.backend.pojo.Student;
 import moe.seclan.backend.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,33 +17,38 @@ public class StudentController {
     private StudentService studentService;
 
     @GetMapping
-    public Result getPages(String name, String major, String schoolClass,
+    public Result getPages(String studentId, String name, String major, String schoolClass,
                            @RequestParam(defaultValue = "1") Integer page,
                            @RequestParam(defaultValue = "50") Integer size) {
-        log.info("GET student by name: {}, major: {}, schoolClass: {}; page {} of {}",
-                name, major, schoolClass, page, size);
-        PageBean pageBean = studentService.getPages(name, major, schoolClass, page, size);
+        log.info("GET student by id: {}, name: {}, major: {}, schoolClass: {}; page {} of {}",
+                studentId, name, major, schoolClass, page, size);
+        PageBean pageBean = studentService.getPages(studentId, name, major, schoolClass, page, size);
         return Result.success(pageBean);
     }
 
-    @DeleteMapping("/{studentId}")
-    public Result delete(@PathVariable Integer studentId) {
-        log.info("DELETE student with uid {}", studentId);
-        studentService.delete(studentId);
+    @GetMapping("/{uid}")
+    public Result getStudent(@PathVariable Integer uid) {
+        log.info("GET student by id: {}", uid);
+        return Result.success(studentService.getStudent(uid));
+    }
+
+    @DeleteMapping("/{uid}")
+    public Result delete(@PathVariable Integer uid) {
+        log.info("DELETE student with uid {}", uid);
+        studentService.delete(uid);
         return Result.success();
     }
 
-//    @PostMapping
-//    public Result insert(@RequestBody Student student) {
-//        log.info("ADD student {}", student);
-//        studentService.insert(student);
-//        return Result.success();
-//    }
+    @PostMapping
+    public Result insert(@RequestBody Student student) {
+        log.info("ADD student {}", student);
+        return Result.success(studentService.insert(student));
+    }
 
-//    @PutMapping("/{studentId}")
-//    public Result update(@PathVariable Integer studentId, @RequestBody Student student) {
-//        log.info("UPDATE student with uid {}", studentId);
-//        studentService.update()
-//    }
+    @PutMapping
+    public Result update(@RequestBody Student student) {
+        log.info("UPDATE student {}", student);
+        return Result.success(studentService.update(student));
+    }
 
 }

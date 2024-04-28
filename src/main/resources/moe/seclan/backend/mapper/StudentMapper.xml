@@ -8,13 +8,16 @@
         select *
         from student
         <where>
-            <if test="name != null">
-                name like concat('%', #{name}, '%')
+            <if test="studentId != null and studentId != ''">
+                student_id like concat (#{studentId}, '%')
             </if>
-            <if test="major != null">
+            <if test="name != null and name != ''">
+                and name like concat('%', #{name}, '%')
+            </if>
+            <if test="major != null and name != ''">
                 and major like concat('%', #{major}, '%')
             </if>
-            <if test="schoolClass != null">
+            <if test="schoolClass != null and name != ''">
                 and school_class like concat('%', #{schoolClass}, '%')
             </if>
         </where>

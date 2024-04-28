@@ -1,10 +1,7 @@
 package moe.seclan.backend.mapper;
 
 import moe.seclan.backend.pojo.Student;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -14,12 +11,29 @@ public interface StudentMapper {
     @Select("SELECT COUNT(*) FROM student")
     Integer count();
 
-    List<Student> getPages(String name, String major, String schoolClass, Integer start, Integer limit);
+    List<Student> getPages(String studentId, String name, String major, String schoolClass,
+                           Integer start, Integer limit);
 
-    @Delete("DELETE FROM student WHERE student_id = #{studentId}")
-    void delete(Integer studentId);
+    @Select("SELECT * FROM student WHERE uid = #{uid}")
+    Student getStudent(Integer uid);
 
-    @Insert("INSERT INTO student(student_id, name, major, school_class)" +
-            "values (#{studentID}, #{name}, #{major}, #{schoolClass})")
-    void insert(Student student);
+    @Delete("DELETE FROM student WHERE uid = #{uid}")
+    void delete(Integer uid);
+
+    @Insert("""
+            INSERT INTO student(student_id, name, major, school_class)
+            values (#{studentID}, #{name}, #{major}, #{schoolClass})""")
+    Integer insert(Student student);
+
+    @Update("""
+            UPDATE student
+            SET
+                student_id = #{studentId},
+                name = #{name},
+                major = #{major},
+                school_class = #{schoolClass}
+            WHERE
+                uid = ${uid}""")
+    Integer update(Student student);
+
 }

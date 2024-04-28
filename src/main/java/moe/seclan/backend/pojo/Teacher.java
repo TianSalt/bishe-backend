@@ -5,10 +5,9 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class Student {
+public class Teacher {
     private Integer uid;
-    private String studentId;
+    private String employeeId;
     private String name;
-    private String major;
-    private String schoolClass;
+    private String passwordHash; // MD5
 }

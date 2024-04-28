@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class Student {
-    private String student_id;
+    private String studentId;
     private String name;
     private String major;
     private String schoolClass;

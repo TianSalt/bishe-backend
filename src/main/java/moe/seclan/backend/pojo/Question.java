@@ -7,6 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class Question {
     private Integer questionId;
+    private Integer creator;
     private Integer questionType;
     private String content;
     private String correctAnswer;

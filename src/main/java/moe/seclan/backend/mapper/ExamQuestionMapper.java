@@ -28,10 +28,12 @@ public interface ExamQuestionMapper {
 
     @Update("""
             UPDATE exam_question
-            SET exam_id = #{examId}, question_id = #{questionId}, score = #{score}
-            WHERE question_index = #{questionIndex}""")
+            SET question_id = #{questionId}, score = #{score}
+            WHERE exam_id = #{examId} AND question_index = #{questionIndex}""")
     void update(ExamQuestion examQuestion);
 
-    @Delete("DELETE FROM exam_question WHERE question_index = #{questionIndex}")
-    void delete(Integer questionIndex);
+    @Delete("""
+            DELETE FROM exam_question
+            WHERE exam_id = #{examId} AND question_index = #{questionIndex}""")
+    void delete(Integer examId, Integer questionIndex);
 }

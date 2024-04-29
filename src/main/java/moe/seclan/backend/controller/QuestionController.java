@@ -16,15 +16,17 @@ public class QuestionController {
     private QuestionService questionService;
 
     @GetMapping
-    public Result get(Integer questionId, Integer questionType, String content) {
-        log.info("GET question with id {} and type {} and content {}", questionId, questionType, content);
-        return Result.success(questionService.get(questionId, questionType, content));
+    public Result get(Integer questionId, Integer creator,
+                      Integer questionType, String content) {
+        log.info("GET question with id {}, creator {}, type {}, content {}",
+                questionId, creator, questionType, content);
+        return Result.success(questionService.get(questionId, creator, questionType, content));
     }
 
     @GetMapping("/{questionId}")
-    public Result getByQuestionId(@PathVariable Integer questionId) {
+    public Result getById(@PathVariable Integer questionId) {
         log.info("GET question with id {}", questionId);
-        return Result.success(questionService.getByQuestionId(questionId));
+        return Result.success(questionService.getById(questionId));
     }
 
     @PostMapping
@@ -33,4 +35,19 @@ public class QuestionController {
         questionService.insert(question);
         return Result.success();
     }
+
+    @DeleteMapping("/{questionId}")
+    public Result delete(@PathVariable Integer questionId) {
+        log.info("DELETE question with id {}", questionId);
+        questionService.delete(questionId);
+        return Result.success();
+    }
+
+    @PutMapping
+    public Result update(@RequestBody Question question) {
+        log.info("UPDATE question {}", question);
+        questionService.update(question);
+        return Result.success();
+    }
+
 }

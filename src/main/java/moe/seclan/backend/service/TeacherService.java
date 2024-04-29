@@ -14,6 +14,7 @@ public interface TeacherService {
 
     void delete(Integer uid);
 
-    void insert(Teacher teacher);
+    int insert(Teacher teacher);
 
+    int update(Teacher teacher);
 }

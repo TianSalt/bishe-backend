@@ -12,16 +12,21 @@ import java.util.List;
 @Mapper
 public interface QuestionMapper {
 
-    List<Question> get(Integer questionId, Integer questionType, String content);
+    List<Question> get(Integer questionId, Integer creator,
+                       Integer questionType, String content);
+
+    @Select("SELECT * FROM question WHERE question_id = #{questionId}")
+    Question getById(Integer questionId);
 
     @Insert("""
-            INSERT INTO question(question_type, content, correct_answer)
-            VALUES (#{questionType}, #{content}, #{correctAnswer})""")
+            INSERT INTO question(creator, question_type, content, correct_answer)
+            VALUES (#{creator}, #{questionType}, #{content}, #{correctAnswer})""")
     void insert(Question question);
 
     @Update("""
             UPDATE question
-            SET question_type = #{questionType}, content = #{content}, correct_answer = #{correctAnswer}
+            SET creator = ${creator}, question_type = #{questionType}, 
+                content = #{content}, correct_answer = #{correctAnswer}
             WHERE question_id = #{questionId}""")
     void update(Question question);
 

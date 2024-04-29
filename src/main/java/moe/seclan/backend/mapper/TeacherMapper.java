@@ -1,10 +1,7 @@
 package moe.seclan.backend.mapper;
 
 import moe.seclan.backend.pojo.Teacher;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -23,5 +20,12 @@ public interface TeacherMapper {
     @Insert("""
             INSERT INTO teacher(employee_id, name, password_hash)
             values (#{employeeId}, #{name}, #{passwordHash})""")
-    void insert(Teacher teacher);
+    int insert(Teacher teacher);
+
+    @Update("""
+            UPDATE teacher
+            SET name=#{name}, employee_id=#{employeeId}, password_hash=#{passwordHash}
+            WHERE uid = #{uid}""")
+    int update(Teacher teacher);
+
 }

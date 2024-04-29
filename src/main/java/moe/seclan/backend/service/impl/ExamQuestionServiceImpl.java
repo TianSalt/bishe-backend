@@ -20,24 +20,24 @@ public class ExamQuestionServiceImpl implements ExamQuestionService {
     private QuestionMapper questionMapper;
 
     @Override
-    public Question getQuestionById(Integer questionId) {
-        return questionMapper.get(questionId, null, null).get(0);
-    }
-
-    @Override
-    public List<Integer> getQuestionIdsOfExam(Integer examId) {
-        return examQuestionMapper.getQuestionIdsOfExam(examId);
-    }
-
-    @Override
     public List<Question> getQuestionsOfExam(Integer examId) {
         List<Integer> questionIdsOfExam = examQuestionMapper.getQuestionIdsOfExam(examId);
-        return questionIdsOfExam.stream().map(this::getQuestionById).toList();
+        return questionIdsOfExam.stream().map(questionMapper::getById).toList();
     }
 
     @Override
     public void insert(ExamQuestion examQuestion) {
         examQuestionMapper.insert(examQuestion);
+    }
+
+    @Override
+    public void delete(Integer examId, Integer questionIndex) {
+        examQuestionMapper.delete(examId, questionIndex);
+    }
+
+    @Override
+    public void update(ExamQuestion examQuestion) {
+        examQuestionMapper.update(examQuestion);
     }
 
 }

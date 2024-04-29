@@ -15,12 +15,6 @@ public class ExamQuestionController {
     @Autowired
     private ExamQuestionService examQuestionService;
 
-    @GetMapping("/id-list")
-    public Result getQuestionIdsOfExam(Integer examId) {
-        log.info("GET question id list with exam id {}", examId);
-        return Result.success(examQuestionService.getQuestionIdsOfExam(examId));
-    }
-
     @GetMapping("/list")
     public Result getQuestionsOfExam(Integer examId) {
         log.info("GET question list with exam id {}", examId);
@@ -31,6 +25,20 @@ public class ExamQuestionController {
     public Result insert(@RequestBody ExamQuestion examQuestion) {
         log.info("INSERT exam_question {}", examQuestion);
         examQuestionService.insert(examQuestion);
+        return Result.success();
+    }
+
+    @DeleteMapping
+    public Result delete(Integer examId, Integer questionIndex) {
+        log.info("DELETE exam_question with id {} and question id {}", examId, questionIndex);
+        examQuestionService.delete(examId, questionIndex);
+        return Result.success();
+    }
+
+    @PutMapping
+    public Result update(@RequestBody ExamQuestion examQuestion) {
+        log.info("UPDATE exam_question {}", examQuestion);
+        examQuestionService.update(examQuestion);
         return Result.success();
     }
 

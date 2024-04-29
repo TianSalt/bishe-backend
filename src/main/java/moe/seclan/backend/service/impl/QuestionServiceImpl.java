@@ -15,13 +15,14 @@ public class QuestionServiceImpl implements QuestionService {
     private QuestionMapper questionMapper;
 
     @Override
-    public List<Question> get(Integer questionId, Integer questionType, String content) {
-        return questionMapper.get(questionId, questionType, content);
+    public List<Question> get(Integer questionId, Integer creator,
+                              Integer questionType, String content) {
+        return questionMapper.get(questionId, creator, questionType, content);
     }
 
     @Override
-    public Question getByQuestionId(Integer questionId) {
-        return questionMapper.get(questionId, null, null).get(0);
+    public Question getById(Integer questionId) {
+        return questionMapper.getById(questionId);
     }
 
 

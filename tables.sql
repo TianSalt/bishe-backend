@@ -46,9 +46,11 @@ CREATE TABLE exam
 CREATE TABLE question
 (
     question_id    INT AUTO_INCREMENT PRIMARY KEY,
+    creator        INT,
     question_type  INT,
     content        TEXT,
-    correct_answer TEXT
+    correct_answer TEXT,
+    FOREIGN KEY (creator) REFERENCES teacher (uid)
 ) DEFAULT CHARSET = utf8;
 
 CREATE TABLE student_exam

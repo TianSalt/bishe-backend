@@ -8,9 +8,10 @@ import java.util.List;
 @Service
 public interface QuestionService {
 
-    List<Question> get(Integer questionId, Integer questionType, String content);
+    List<Question> get(Integer questionId, Integer creator,
+                       Integer questionType, String content);
 
-    Question getByQuestionId(Integer questionId);
+    Question getById(Integer questionId);
 
     void insert(Question question);
 

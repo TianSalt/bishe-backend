@@ -21,6 +21,12 @@ public class StudentExamController {
         return Result.success(studentExamService.getPresence(studentId, examId));
     }
 
+    @GetMapping("/list")
+    public Result getExamsOfStudent(Integer studentId) {
+        log.info("GET LIST studentId: {}", studentId);
+        return Result.success(studentExamService.getExamsOfStudent(studentId));
+    }
+
     @DeleteMapping
     public Result delete(Integer studentId, Integer examId) {
         log.info("DELETE studentId: {}, examId: {}", studentId, examId);
@@ -34,4 +40,12 @@ public class StudentExamController {
         studentExamService.insert(studentExam);
         return Result.success();
     }
+
+    @PutMapping
+    public Result present(@RequestBody StudentExam studentExam) {
+        log.info("PRESENT {}", studentExam);
+        studentExamService.present(studentExam);
+        return Result.success();
+    }
+
 }

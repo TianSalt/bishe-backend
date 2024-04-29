@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("teachers")
+@RequestMapping("/teachers")
 public class TeacherController {
 
     @Autowired

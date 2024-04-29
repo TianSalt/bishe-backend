@@ -10,7 +10,7 @@ import java.util.List;
 public interface ExamService {
 
     List<Exam> get(Integer examId, Integer creator, Boolean isPublished,
-                   String examName, LocalDateTime fromTime, LocalDateTime toTime);
+                   String title, LocalDateTime fromTime, LocalDateTime toTime);
 
     Exam getById(Integer examId);
 

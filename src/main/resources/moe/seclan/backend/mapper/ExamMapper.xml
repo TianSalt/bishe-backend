@@ -17,8 +17,8 @@
             <if test="isPublished != null">
                 and is_published = #{isPublished}
             </if>
-            <if test="examName != null and examName != ''">
-                and exam_name like concat('%', #{examName}, '%')
+            <if test="title != null and title != ''">
+                and title like concat('%', #{title}, '%')
             </if>
             <if test="fromTime != null">
                 and end_time > #{fromTime}
@@ -28,4 +28,30 @@
             </if>
         </where>
     </select>
+
+    <update id="update">
+        UPDATE exam
+        <set>
+            <if test="creator != null">
+                creator = #{creator},
+            </if>
+            <if test="isPublished != null">
+                is_published = #{isPublished},
+            </if>
+            <if test="title != null and title != ''">
+                title = #{title},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime},
+            </if>
+            <if test="introduction != null and introduction != ''">
+                introduction = #{introduction}
+            </if>
+        </set>
+        WHERE exam_id = #{examId}
+    </update>
+
 </mapper>

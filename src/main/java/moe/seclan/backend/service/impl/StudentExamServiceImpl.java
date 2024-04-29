@@ -24,6 +24,8 @@ public class StudentExamServiceImpl implements StudentExamService {
 
     @Override
     public void insert(StudentExam studentExam) {
+        if (studentExam.getPresence() == null)
+            studentExam.setPresence(false);
         studentExamMapper.insert(studentExam);
     }
 

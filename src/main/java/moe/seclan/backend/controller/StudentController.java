@@ -27,9 +27,9 @@ public class StudentController {
     }
 
     @GetMapping("/{uid}")
-    public Result getStudent(@PathVariable Integer uid) {
+    public Result getByUid(@PathVariable Integer uid) {
         log.info("GET student by id: {}", uid);
-        return Result.success(studentService.getStudent(uid));
+        return Result.success(studentService.getByUid(uid));
     }
 
     @DeleteMapping("/{uid}")

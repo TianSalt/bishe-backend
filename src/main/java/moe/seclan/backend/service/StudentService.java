@@ -9,7 +9,7 @@ public interface StudentService {
 
     PageBean getPages(String studentId, String name, String major, String schoolClass, Integer page, Integer size);
 
-    Student getStudent(Integer uid);
+    Student getByUid(Integer uid);
 
     void delete(Integer uid);
 

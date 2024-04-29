@@ -17,8 +17,8 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     public List<Exam> get(Integer examId, Integer creator, Boolean isPublished,
-                          String examName, LocalDateTime fromTime, LocalDateTime toTime) {
-        return examMapper.get(examId, creator, isPublished, examName, fromTime, toTime);
+                          String title, LocalDateTime fromTime, LocalDateTime toTime) {
+        return examMapper.get(examId, creator, isPublished, title, fromTime, toTime);
     }
 
     @Override
@@ -33,6 +33,8 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     public void insert(Exam exam) {
+        if (exam.getIsPublished() == null)
+            exam.setIsPublished(false);
         examMapper.insert(exam);
     }
 

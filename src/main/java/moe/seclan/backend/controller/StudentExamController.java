@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-@RequestMapping("studentExams")
+@RequestMapping("/student-exams")
 public class StudentExamController {
 
     @Autowired

@@ -6,9 +6,9 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class StudentExamQuestion {
-    private Integer studentId;
+    private Integer studentUid;
     private Integer examId;
-    private Integer questionId;
+    private Integer questionIndex;
     private String answer;
-    private Integer score;
+    private java.math.BigDecimal score;
 }

@@ -22,8 +22,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student getStudent(Integer uid) {
-        return studentMapper.getStudent(uid);
+    public Student getByUid(Integer uid) {
+        return studentMapper.getByUid(uid);
     }
 
     @Override

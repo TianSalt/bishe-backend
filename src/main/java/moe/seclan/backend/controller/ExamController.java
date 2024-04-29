@@ -13,7 +13,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("exams")
+@RequestMapping("/exams")
 public class ExamController {
 
     @Autowired
@@ -21,10 +21,10 @@ public class ExamController {
 
     @GetMapping
     public Result get(Integer examId, Integer creator, Boolean isPublished,
-                      String examName, LocalDateTime fromTime, LocalDateTime toTime) {
+                      String title, LocalDateTime fromTime, LocalDateTime toTime) {
         log.info("GET exam by {}, {}, {}, {}, {}, {}",
-                examId, creator, isPublished, examName, fromTime, toTime);
-        List<Exam> list = examService.get(examId, creator, isPublished, examName, fromTime, toTime);
+                examId, creator, isPublished, title, fromTime, toTime);
+        List<Exam> list = examService.get(examId, creator, isPublished, title, fromTime, toTime);
         return Result.success(list);
     }
 

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="moe.seclan.backend.mapper.StudentExamQuestionMapper">
+
+    <select id="get" resultType="moe.seclan.backend.pojo.StudentExamQuestion">
+        SELECT * FROM student_exam_question
+        <where>
+            <if test="studentId != null">
+                student_uid = #{studentUid}
+            </if>
+            <if test="examId != null">
+                and exam_id = #{examId}
+            </if>
+            <if test="questionId != null">
+                and question_index = #{questionIndex}
+            </if>
+        </where>
+    </select>
+
+    <update id="update">
+        UPDATE student_exam_question
+        <set>
+            <if test="answer != null">
+                answer = #{answer},
+            </if>
+            <if test="score != null">
+                score = #{score}
+            </if>
+        </set>
+        WHERE student_uid = #{studentUid} AND exam_id = #{examId} AND question_index = #{questionIndex}
+    </update>
+
+</mapper>

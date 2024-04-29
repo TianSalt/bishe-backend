@@ -9,13 +9,13 @@ import moe.seclan.backend.pojo.ExamQuestion;
 
 @Slf4j
 @RestController
-@RequestMapping("/examQuestions")
+@RequestMapping("/exam-questions")
 public class ExamQuestionController {
 
     @Autowired
     private ExamQuestionService examQuestionService;
 
-    @GetMapping("/idList")
+    @GetMapping("/id-list")
     public Result getQuestionIdsOfExam(Integer examId) {
         log.info("GET question id list with exam id {}", examId);
         return Result.success(examQuestionService.getQuestionIdsOfExam(examId));

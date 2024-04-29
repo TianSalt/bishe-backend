@@ -15,7 +15,7 @@ public interface StudentMapper {
                            Integer start, Integer limit);
 
     @Select("SELECT * FROM student WHERE uid = #{uid}")
-    Student getStudent(Integer uid);
+    Student getByUid(Integer uid);
 
     @Delete("DELETE FROM student WHERE uid = #{uid}")
     void delete(Integer uid);

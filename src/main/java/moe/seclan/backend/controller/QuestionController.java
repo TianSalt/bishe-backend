@@ -1,17 +1,15 @@
 package moe.seclan.backend.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import moe.seclan.backend.pojo.Question;
 import moe.seclan.backend.pojo.Result;
 import moe.seclan.backend.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-@RequestMapping("questions")
+@RequestMapping("/questions")
 public class QuestionController {
 
     @Autowired
@@ -27,5 +25,12 @@ public class QuestionController {
     public Result getByQuestionId(@PathVariable Integer questionId) {
         log.info("GET question with id {}", questionId);
         return Result.success(questionService.getByQuestionId(questionId));
+    }
+
+    @PostMapping
+    public Result insert(@RequestBody Question question) {
+        log.info("INSERT question {}", question);
+        questionService.insert(question);
+        return Result.success();
     }
 }

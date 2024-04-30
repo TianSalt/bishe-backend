@@ -17,12 +17,12 @@ public class StudentController {
     private StudentService studentService;
 
     @GetMapping
-    public Result getPages(String studentId, String name, String major, String schoolClass,
-                           @RequestParam(defaultValue = "1") Integer page,
-                           @RequestParam(defaultValue = "50") Integer size) {
+    public Result getPage(String studentId, String name, String major, String schoolClass,
+                          @RequestParam(defaultValue = "1") Integer page,
+                          @RequestParam(defaultValue = "50") Integer size) {
         log.info("GET student by id: {}, name: {}, major: {}, schoolClass: {}; page {} of {}",
                 studentId, name, major, schoolClass, page, size);
-        PageBean pageBean = studentService.getPages(studentId, name, major, schoolClass, page, size);
+        PageBean pageBean = studentService.getPage(studentId, name, major, schoolClass, page, size);
         return Result.success(pageBean);
     }
 

@@ -48,4 +48,9 @@ public class StudentExamQuestionController {
         return Result.success(list);
     }
 
+    @GetMapping("/sum-score")
+    public Result sumScore(Integer studentUid, Integer examId) {
+        return Result.success(studentExamQuestionService.sumScore(studentUid, examId));
+    }
+
 }

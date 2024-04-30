@@ -15,9 +15,10 @@ public class StudentServiceImpl implements StudentService {
     private StudentMapper studentMapper;
 
     @Override
-    public PageBean getPages(String studentId, String name, String major, String schoolClass, Integer page, Integer size) {
+    public PageBean getPage(String studentId, String name, String major,
+                            String schoolClass, Integer page, Integer size) {
         Integer count = studentMapper.count();
-        List<Student> studentList = studentMapper.getPages(studentId, name, major, schoolClass, (page - 1) * size, size);
+        List<Student> studentList = studentMapper.getPage(studentId, name, major, schoolClass, (page - 1) * size, size);
         return new PageBean(count, studentList);
     }
 
@@ -41,5 +42,9 @@ public class StudentServiceImpl implements StudentService {
         return studentMapper.update(student);
     }
 
+    @Override
+    public Student login(String studentId, String name) {
+        return studentMapper.getBySidAndName(studentId, name);
+    }
 
 }

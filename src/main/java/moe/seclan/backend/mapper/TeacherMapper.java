@@ -28,4 +28,9 @@ public interface TeacherMapper {
             WHERE uid = #{uid}""")
     int update(Teacher teacher);
 
+    @Select("""
+            SELECT * FROM teacher
+            WHERE (employee_id = #{employeeId})
+                  AND password_hash = #{passwordHash}""")
+    Teacher getByEidAndPassword(String employeeId, String passwordHash);
 }

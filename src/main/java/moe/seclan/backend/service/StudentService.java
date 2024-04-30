@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 @Service
 public interface StudentService {
 
-    PageBean getPages(String studentId, String name, String major, String schoolClass, Integer page, Integer size);
+    PageBean getPage(String studentId, String name, String major,
+                     String schoolClass, Integer page, Integer size);
 
     Student getByUid(Integer uid);
 
@@ -17,4 +18,5 @@ public interface StudentService {
 
     Integer update(Student student);
 
+    Student login(String studentId, String name);
 }

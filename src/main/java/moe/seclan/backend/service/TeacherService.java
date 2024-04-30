@@ -17,4 +17,6 @@ public interface TeacherService {
     int insert(Teacher teacher);
 
     int update(Teacher teacher);
+
+    Teacher login(String employeeId, String passwordHash);
 }

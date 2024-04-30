@@ -11,8 +11,8 @@ public interface StudentMapper {
     @Select("SELECT COUNT(*) FROM student")
     Integer count();
 
-    List<Student> getPages(String studentId, String name, String major, String schoolClass,
-                           Integer start, Integer limit);
+    List<Student> getPage(String studentId, String name, String major, String schoolClass,
+                          Integer start, Integer limit);
 
     @Select("SELECT * FROM student WHERE uid = #{uid}")
     Student getByUid(Integer uid);
@@ -33,7 +33,9 @@ public interface StudentMapper {
                 major = #{major},
                 school_class = #{schoolClass}
             WHERE
-                uid = ${uid}""")
+                uid = #{uid}""")
     Integer update(Student student);
 
+    @Select("SELECT * FROM student WHERE student_id = ${studentId} AND name = #{name}")
+    Student getBySidAndName(String studentId, String name);
 }

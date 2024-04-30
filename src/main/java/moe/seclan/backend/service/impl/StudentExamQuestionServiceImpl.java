@@ -51,6 +51,11 @@ public class StudentExamQuestionServiceImpl implements StudentExamQuestionServic
     }
 
     @Override
+    public BigDecimal sumScore(Integer studentUid, Integer examId) {
+        return studentExamQuestionMapper.sumScore(studentUid, examId);
+    }
+
+    @Override
     public List<StudentExamQuestion> get
             (Integer studentUid, Integer examId, Integer questionId) {
         return studentExamQuestionMapper.get(studentUid, examId, questionId);

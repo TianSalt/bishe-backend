@@ -41,7 +41,7 @@ public interface StudentExamQuestionMapper {
             WHERE q.question_id = (
                 SELECT eq.question_id
                 FROM exam_question eq
-                WHERE eq.exam_id = ${examId} AND eq.question_index = ${questionIndex})""")
+                WHERE eq.exam_id = #{examId} AND eq.question_index = #{questionIndex})""")
     Question getQuestion(StudentExamQuestion studentExamQuestion);
 
     @Select("""

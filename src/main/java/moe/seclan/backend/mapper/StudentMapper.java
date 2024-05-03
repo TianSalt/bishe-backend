@@ -11,8 +11,7 @@ public interface StudentMapper {
     @Select("SELECT COUNT(*) FROM student")
     Integer count();
 
-    List<Student> getPage(String studentId, String name, String major, String schoolClass,
-                          Integer start, Integer limit);
+    List<Student> get(String studentId, String name, String major, String schoolClass);
 
     @Select("SELECT * FROM student WHERE uid = #{uid}")
     Student getByUid(Integer uid);

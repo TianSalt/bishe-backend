@@ -8,6 +8,7 @@ import moe.seclan.backend.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @Slf4j
 @RestController
 @RequestMapping("/teachers")
@@ -23,14 +24,16 @@ public class TeacherController {
     }
 
     @GetMapping("/{uid}")
-    public Result getByUid(@PathVariable Integer uid) {
+    public Result getByUid(@PathVariable String uid) {
         log.info("GET teacher by uid: {}", uid);
-        return Result.success(teacherService.getByUid(uid));
+        return Result.success(teacherService.getByUid(Integer.parseInt(uid)));
     }
 
     @PostMapping
     public Result insert(@RequestBody Teacher teacher) {
         log.info("POST teacher: {}", teacher);
+        if (teacher.getEmployeeId() == null)
+            return Result.error("Employee id is required");
         return Result.success(teacherService.insert(teacher));
     }
 
@@ -38,6 +41,13 @@ public class TeacherController {
     public Result update(@RequestBody Teacher teacher) {
         log.info("PUT teacher: {}", teacher);
         return Result.success(teacherService.update(teacher));
+    }
+
+    @DeleteMapping("/{uid}")
+    public Result delete(@PathVariable Integer uid) {
+        log.info("DELETE teacher: {}", uid);
+        teacherService.delete(uid);
+        return Result.success();
     }
 
 }

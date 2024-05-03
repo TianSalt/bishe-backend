@@ -1,7 +1,6 @@
 package moe.seclan.backend.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import moe.seclan.backend.pojo.PageBean;
 import moe.seclan.backend.pojo.Result;
 import moe.seclan.backend.pojo.Student;
 import moe.seclan.backend.service.StudentService;
@@ -17,13 +16,10 @@ public class StudentController {
     private StudentService studentService;
 
     @GetMapping
-    public Result getPage(String studentId, String name, String major, String schoolClass,
-                          @RequestParam(defaultValue = "1") Integer page,
-                          @RequestParam(defaultValue = "50") Integer size) {
-        log.info("GET student by id: {}, name: {}, major: {}, schoolClass: {}; page {} of {}",
-                studentId, name, major, schoolClass, page, size);
-        PageBean pageBean = studentService.getPage(studentId, name, major, schoolClass, page, size);
-        return Result.success(pageBean);
+    public Result get(String studentId, String name, String major, String schoolClass) {
+        log.info("GET student by id: {}, name: {}, major: {}, schoolClass: {}",
+                studentId, name, major, schoolClass);
+        return Result.success(studentService.get(studentId, name, major, schoolClass));
     }
 
     @GetMapping("/{uid}")
@@ -42,6 +38,8 @@ public class StudentController {
     @PostMapping
     public Result insert(@RequestBody Student student) {
         log.info("ADD student {}", student);
+        if (student.getStudentId() == null)
+            return Result.error("student id is null");
         return Result.success(studentService.insert(student));
     }
 

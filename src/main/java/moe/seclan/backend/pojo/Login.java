@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class Login {
-    String item1;
-    String item2;
+    private String item1;
+    private String item2;
 }

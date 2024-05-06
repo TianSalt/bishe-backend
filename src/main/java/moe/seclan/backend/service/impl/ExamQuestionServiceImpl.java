@@ -8,6 +8,7 @@ import moe.seclan.backend.service.ExamQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -27,6 +28,8 @@ public class ExamQuestionServiceImpl implements ExamQuestionService {
 
     @Override
     public void insert(ExamQuestion examQuestion) {
+        if (examQuestion.getScore() == null)
+            examQuestion.setScore(BigDecimal.ZERO);
         examQuestionMapper.insert(examQuestion);
     }
 
@@ -38,6 +41,11 @@ public class ExamQuestionServiceImpl implements ExamQuestionService {
     @Override
     public void update(ExamQuestion examQuestion) {
         examQuestionMapper.update(examQuestion);
+    }
+
+    @Override
+    public List<ExamQuestion> get(Integer examId, Integer questionIndex) {
+        return examQuestionMapper.get(examId, questionIndex);
     }
 
 }

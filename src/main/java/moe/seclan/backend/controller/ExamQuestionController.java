@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import moe.seclan.backend.pojo.ExamQuestion;
 
+@CrossOrigin
 @Slf4j
 @RestController
 @RequestMapping("/exam-questions")
@@ -14,6 +15,12 @@ public class ExamQuestionController {
 
     @Autowired
     private ExamQuestionService examQuestionService;
+
+    @GetMapping
+    public Result getExamQuestions(Integer examId, Integer questionIndex) {
+        log.info("getExamQuestions examId={}, questionIndex={}", examId, questionIndex);
+        return Result.success(examQuestionService.get(examId, questionIndex));
+    }
 
     @GetMapping("/list")
     public Result getQuestionsOfExam(Integer examId) {

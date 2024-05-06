@@ -2,6 +2,7 @@ package moe.seclan.backend.service.impl;
 
 import moe.seclan.backend.mapper.StudentExamMapper;
 import moe.seclan.backend.pojo.Exam;
+import moe.seclan.backend.pojo.Student;
 import moe.seclan.backend.pojo.StudentExam;
 import moe.seclan.backend.service.StudentExamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,18 +17,18 @@ public class StudentExamServiceImpl implements StudentExamService {
     StudentExamMapper studentExamMapper;
 
     @Override
-    public Boolean getPresence(Integer studentId, Integer examId) {
-        return studentExamMapper.getPresence(studentId, examId);
+    public Boolean getPresence(Integer studentUid, Integer examId) {
+        return studentExamMapper.getPresence(studentUid, examId);
     }
 
     @Override
-    public List<Exam> getExamsOfStudent(Integer studentId) {
-        return studentExamMapper.getExamsOfStudent(studentId);
+    public List<Exam> getExamsOfStudent(Integer studentUid) {
+        return studentExamMapper.getExamsOfStudent(studentUid);
     }
 
     @Override
-    public void delete(Integer studentId, Integer examId) {
-        studentExamMapper.delete(studentId, examId);
+    public void delete(Integer studentUid, Integer examId) {
+        studentExamMapper.delete(studentUid, examId);
     }
 
     @Override
@@ -40,6 +41,11 @@ public class StudentExamServiceImpl implements StudentExamService {
     @Override
     public void present(StudentExam studentExam) {
         studentExamMapper.present(studentExam);
+    }
+
+    @Override
+    public List<Student> getStudentsInExam(Integer examId) {
+        return studentExamMapper.getStudentsInExam(examId);
     }
 
 }

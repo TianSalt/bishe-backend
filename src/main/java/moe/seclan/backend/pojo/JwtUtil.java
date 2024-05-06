@@ -2,6 +2,7 @@ package moe.seclan.backend.pojo;
 
 import io.jsonwebtoken.*;
 
+import java.util.Date;
 import java.util.UUID;
 
 public class JwtUtil {
@@ -17,6 +18,7 @@ public class JwtUtil {
                 .claim("uid", uid)
                 .claim("role", role)
                 .setId(UUID.randomUUID().toString())
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7))
                 .signWith(SignatureAlgorithm.HS256, signature)
                 .compact();
     }
@@ -24,7 +26,7 @@ public class JwtUtil {
 
     public static Boolean checkToken(String token) {
         if (token == null) {
-            return false;
+            return Boolean.FALSE;
         }
         try {
             Jwts.parser().setSigningKey(signature).parseClaimsJws(token);

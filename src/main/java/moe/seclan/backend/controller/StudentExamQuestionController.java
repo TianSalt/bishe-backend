@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @Slf4j
 @RestController
 @RequestMapping("/student-exam-questions")

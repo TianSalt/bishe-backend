@@ -32,8 +32,7 @@ public interface ExamQuestionMapper {
             WHERE exam_id = #{examId} AND question_index = #{questionIndex}""")
     void update(ExamQuestion examQuestion);
 
-    @Delete("""
-            DELETE FROM exam_question
-            WHERE exam_id = #{examId} AND question_index = #{questionIndex}""")
     void delete(Integer examId, Integer questionIndex);
+
+    List<ExamQuestion> get(Integer examId, Integer questionIndex);
 }

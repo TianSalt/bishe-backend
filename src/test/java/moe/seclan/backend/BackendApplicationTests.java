@@ -1,16 +1,21 @@
 package moe.seclan.backend;
 
 import io.jsonwebtoken.*;
+import moe.seclan.backend.mapper.ExamMapper;
+import moe.seclan.backend.pojo.Exam;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Date;
 import java.util.UUID;
 
-
+@SpringBootTest
 class BackendApplicationTests {
 
     private String signature = "signature";
+
+    @Autowired private ExamMapper examMapper;
 
     @Test
     void contextLoads() {
@@ -36,6 +41,13 @@ class BackendApplicationTests {
         System.out.println(claimsJws.getBody().get("username"));
         System.out.println(claimsJws.getBody().get("role"));
         System.out.println(claimsJws.getBody().getExpiration());
+    }
+
+    @Test
+    void useId() {
+        Exam exam = new Exam(null, 57, null, null, null, null, null);
+        examMapper.insert(exam);
+        System.out.println(exam.getExamId());
     }
 
 }

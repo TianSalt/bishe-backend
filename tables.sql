@@ -11,7 +11,7 @@ CREATE TABLE admin
 (
     uid           INT AUTO_INCREMENT PRIMARY KEY,
     username      VARCHAR(30) UNIQUE NOT NULL,
-    password_hash VARCHAR(256)       NOT NULL
+    password_hash VARCHAR(255)       NOT NULL
 );
 
 CREATE TABLE student
@@ -28,7 +28,7 @@ CREATE TABLE teacher
     uid           INT AUTO_INCREMENT PRIMARY KEY,
     employee_id   VARCHAR(255) UNIQUE NOT NULL,
     name          VARCHAR(255)        NOT NULL,
-    password_hash VARCHAR(256)        NOT NULL
+    password_hash VARCHAR(255)        NOT NULL
 ) DEFAULT CHARSET = utf8;
 
 CREATE TABLE exam
@@ -40,7 +40,7 @@ CREATE TABLE exam
     start_time   DATETIME,
     end_time     DATETIME,
     introduction TEXT,
-    FOREIGN KEY (creator) REFERENCES teacher (uid)
+    FOREIGN KEY (creator) REFERENCES teacher (uid) ON DELETE CASCADE
 ) DEFAULT CHARSET = utf8;
 
 CREATE TABLE question
@@ -50,7 +50,7 @@ CREATE TABLE question
     question_type  INT,
     content        TEXT,
     correct_answer TEXT,
-    FOREIGN KEY (creator) REFERENCES teacher (uid)
+    FOREIGN KEY (creator) REFERENCES teacher (uid) ON DELETE CASCADE
 ) DEFAULT CHARSET = utf8;
 
 CREATE TABLE student_exam
@@ -58,8 +58,9 @@ CREATE TABLE student_exam
     student_uid INT,
     exam_id     INT,
     presence    BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (student_uid) REFERENCES student (uid),
-    FOREIGN KEY (exam_id) REFERENCES exam (exam_id)
+    FOREIGN KEY (student_uid) REFERENCES student (uid) ON DELETE CASCADE,
+    FOREIGN KEY (exam_id) REFERENCES exam (exam_id) ON DELETE CASCADE,
+    PRIMARY KEY (student_uid, exam_id)
 );
 
 CREATE TABLE exam_question
@@ -68,8 +69,8 @@ CREATE TABLE exam_question
     question_index INT,
     question_id    INT,
     score          DECIMAL(10, 1),
-    FOREIGN KEY (exam_id) REFERENCES exam (exam_id),
-    FOREIGN KEY (question_id) REFERENCES question (question_id),
+    FOREIGN KEY (exam_id) REFERENCES exam (exam_id) ON DELETE CASCADE,
+    FOREIGN KEY (question_id) REFERENCES question (question_id) ON DELETE CASCADE,
     PRIMARY KEY (exam_id, question_index)
 );
 
@@ -80,6 +81,7 @@ CREATE TABLE student_exam_question
     question_index INT,
     answer         TEXT,
     score          DECIMAL(10, 1),
-    FOREIGN KEY (student_uid) REFERENCES student (uid),
-    FOREIGN KEY (exam_id, question_index) REFERENCES exam_question (exam_id, question_index)
+    FOREIGN KEY (student_uid) REFERENCES student (uid) ON DELETE CASCADE,
+    FOREIGN KEY (exam_id, question_index) REFERENCES exam_question (exam_id, question_index) ON DELETE CASCADE,
+    PRIMARY KEY (student_uid, exam_id, question_index)
 ) DEFAULT CHARSET = utf8;

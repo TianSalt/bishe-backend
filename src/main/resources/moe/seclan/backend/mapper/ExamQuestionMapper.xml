@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="moe.seclan.backend.mapper.ExamQuestionMapper">
+    <select id="get" resultType="moe.seclan.backend.pojo.ExamQuestion">
+        select *
+        from exam_question
+        <where>
+            <if test="examId != null">
+                exam_id = #{examId}
+            </if>
+            <if test="questionIndex != null">
+                and question_index = #{questionIndex}
+            </if>
+        </where>
+        order by question_index
+    </select>
+
+    <delete id="delete">
+        delete from exam_question
+        <where>
+            <if test="examId != null">
+                exam_id = #{examId}
+            </if>
+            <if test="questionIndex != null">
+                and question_index = #{questionIndex}
+            </if>
+        </where>
+    </delete>
+
+</mapper>

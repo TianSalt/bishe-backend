@@ -24,23 +24,25 @@ public class TeacherController {
     }
 
     @GetMapping("/{uid}")
-    public Result getByUid(@PathVariable String uid) {
+    public Result getByUid(@PathVariable Integer uid) {
         log.info("GET teacher by uid: {}", uid);
-        return Result.success(teacherService.getByUid(Integer.parseInt(uid)));
+        return Result.success(teacherService.getByUid(uid));
     }
 
     @PostMapping
     public Result insert(@RequestBody Teacher teacher) {
         log.info("POST teacher: {}", teacher);
-        if (teacher.getEmployeeId() == null)
-            return Result.error("Employee id is required");
-        return Result.success(teacherService.insert(teacher));
+        if (teacherService.insert(teacher) == 0)
+            return Result.error("该工号已存在");
+        else return Result.success();
     }
 
     @PutMapping
     public Result update(@RequestBody Teacher teacher) {
         log.info("PUT teacher: {}", teacher);
-        return Result.success(teacherService.update(teacher));
+        if (teacherService.update(teacher) == 0)
+            return Result.error("该工号已存在");
+        else return Result.success();
     }
 
     @DeleteMapping("/{uid}")

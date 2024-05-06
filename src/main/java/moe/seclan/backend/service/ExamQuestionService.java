@@ -16,4 +16,6 @@ public interface ExamQuestionService {
     void delete(Integer examId, Integer questionIndex);
 
     void update(ExamQuestion examQuestion);
+
+    List<ExamQuestion> get(Integer examId, Integer questionIndex);
 }

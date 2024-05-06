@@ -46,7 +46,7 @@ public class ExamController {
     public Result insert(@RequestBody Exam exam) {
         log.info("ADD exam {}", exam);
         examService.insert(exam);
-        return Result.success();
+        return Result.success(exam.getExamId());
     }
 
     @PutMapping

@@ -1,16 +1,31 @@
 package moe.seclan.backend.service.impl;
 
 import moe.seclan.backend.mapper.ExamMapper;
+import moe.seclan.backend.mapper.TeacherMapper;
 import moe.seclan.backend.pojo.Exam;
+import moe.seclan.backend.pojo.Teacher;
 import moe.seclan.backend.service.ExamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ExamServiceImpl implements ExamService {
+
+    @Autowired
+    private TeacherMapper teacherMapper;
+
+    private LocalDateTime gmtToLocal(LocalDateTime gmtDateTime) {
+        ZoneId currentZone = ZoneId.systemDefault();
+        ZonedDateTime currentZonedDateTime = gmtDateTime.atZone(ZoneId.of("GMT"))
+                .withZoneSameInstant(currentZone);
+        return currentZonedDateTime.toLocalDateTime();
+    }
 
     @Autowired
     private ExamMapper examMapper;
@@ -18,7 +33,19 @@ public class ExamServiceImpl implements ExamService {
     @Override
     public List<Exam> get(Integer examId, Integer creator, Boolean isPublished,
                           String title, LocalDateTime fromTime, LocalDateTime toTime) {
-        return examMapper.get(examId, creator, isPublished, title, fromTime, toTime);
+        List<Exam> exams = examMapper.get(examId, creator, isPublished, title, fromTime, toTime);
+        List<Exam> finalExams = new ArrayList<>();
+        for (Exam exam : exams) {
+            Exam newExam = new Exam(exam);
+            if (newExam.getStartTime() != null)
+                newExam.setStartTime(gmtToLocal(newExam.getStartTime()));
+            if (exam.getEndTime() != null)
+                newExam.setEndTime(gmtToLocal(newExam.getEndTime()));
+            Teacher creatorTeacher = teacherMapper.getByUid(exam.getCreator());
+            newExam.setCreatorName(creatorTeacher.getName());
+            finalExams.add(newExam);
+        }
+        return finalExams;
     }
 
     @Override

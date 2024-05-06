@@ -7,6 +7,7 @@ import moe.seclan.backend.service.StudentExamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @Slf4j
 @RestController
 @RequestMapping("/student-exams")
@@ -15,22 +16,28 @@ public class StudentExamController {
     @Autowired
     private StudentExamService studentExamService;
 
+    @GetMapping("/{examId}")
+    public Result getStudentsInExam(@PathVariable Integer examId) {
+        log.info("getStudentsInExam examId: {}", examId);
+        return Result.success(studentExamService.getStudentsInExam(examId));
+    }
+
     @GetMapping
-    public Result getPresence(Integer studentId, Integer examId) {
-        log.info("GET PRESENCE studentId: {}, examId: {}", studentId, examId);
-        return Result.success(studentExamService.getPresence(studentId, examId));
+    public Result getPresence(Integer studentUid, Integer examId) {
+        log.info("GET PRESENCE studentUid: {}, examId: {}", studentUid, examId);
+        return Result.success(studentExamService.getPresence(studentUid, examId));
     }
 
     @GetMapping("/list")
-    public Result getExamsOfStudent(Integer studentId) {
-        log.info("GET LIST studentId: {}", studentId);
-        return Result.success(studentExamService.getExamsOfStudent(studentId));
+    public Result getExamsOfStudent(Integer studentUid) {
+        log.info("GET LIST studentUid: {}", studentUid);
+        return Result.success(studentExamService.getExamsOfStudent(studentUid));
     }
 
     @DeleteMapping
-    public Result delete(Integer studentId, Integer examId) {
-        log.info("DELETE studentId: {}, examId: {}", studentId, examId);
-        studentExamService.delete(studentId, examId);
+    public Result delete(Integer studentUid, Integer examId) {
+        log.info("DELETE uid: {}, examId: {}", studentUid, examId);
+        studentExamService.delete(studentUid, examId);
         return Result.success();
     }
 

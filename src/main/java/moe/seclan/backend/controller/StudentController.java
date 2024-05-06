@@ -7,6 +7,7 @@ import moe.seclan.backend.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @Slf4j
 @RestController
 @RequestMapping("/students")
@@ -38,15 +39,17 @@ public class StudentController {
     @PostMapping
     public Result insert(@RequestBody Student student) {
         log.info("ADD student {}", student);
-        if (student.getStudentId() == null)
-            return Result.error("student id is null");
-        return Result.success(studentService.insert(student));
+        if (studentService.insert(student) == 0)
+            return Result.error("该学号已存在");
+        else return Result.success();
     }
 
     @PutMapping
     public Result update(@RequestBody Student student) {
         log.info("UPDATE student {}", student);
-        return Result.success(studentService.update(student));
+        if (studentService.update(student) == 0)
+            return Result.error("该学号已存在");
+        else return Result.success();
     }
 
 }

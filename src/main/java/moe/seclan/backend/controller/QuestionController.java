@@ -7,6 +7,7 @@ import moe.seclan.backend.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @Slf4j
 @RestController
 @RequestMapping("/questions")

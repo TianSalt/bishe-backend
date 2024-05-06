@@ -15,27 +15,27 @@ public interface ExamMapper {
     @Delete("DELETE FROM exam WHERE exam_id = #{examId}")
     void delete(Integer examId);
 
+    @Options(keyProperty = "examId", useGeneratedKeys = true)
     @Insert("""
-    INSERT INTO exam (
-        creator,
-        is_published,
-        title,
-        start_time,
-        end_time,
-        introduction
-    )
-    VALUES (
-        #{creator},
-        #{isPublished},
-        #{title},
-        #{startTime},
-        #{endTime},
-        #{introduction}
-    )
-""")
+            INSERT INTO exam (
+                creator,
+                is_published,
+                title,
+                start_time,
+                end_time,
+                introduction
+            )
+            VALUES (
+                #{creator},
+                #{isPublished},
+                #{title},
+                #{startTime},
+                #{endTime},
+                #{introduction}
+            )""")
     void insert(Exam exam);
 
-//    @Update("""
+    //    @Update("""
 //        UPDATE exam
 //        SET creator = #{creator},
 //            is_published = #{isPublished},

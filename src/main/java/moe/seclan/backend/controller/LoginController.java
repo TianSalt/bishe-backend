@@ -2,6 +2,7 @@ package moe.seclan.backend.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import moe.seclan.backend.pojo.*;
+import moe.seclan.backend.service.AdminService;
 import moe.seclan.backend.service.StudentService;
 import moe.seclan.backend.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class LoginController {
     @Autowired
     private StudentService studentService;
 
+    @Autowired
+    private AdminService adminService;
+
     @PostMapping("/teacher-login")
     public Result teacherLogin(@RequestBody Login loginInput) {
         log.info("Login teacher: {} {}", loginInput.getItem1(), loginInput.getItem2());
@@ -27,6 +31,18 @@ public class LoginController {
             return Result.success(new LoginResponse(uid, JwtUtil.createToken(uid, "teacher")));
         } else {
             return Result.error("工号或密码不正确");
+        }
+    }
+
+    @PostMapping("/admin-login")
+    public Result adminLogin(@RequestBody Login loginInput) {
+        log.info("Login admin: {} {}", loginInput.getItem1(), loginInput.getItem2());
+        Admin admin = adminService.login(loginInput.getItem1(), loginInput.getItem2());
+        if (admin != null) {
+            Integer uid = admin.getUid();
+            return Result.success(new LoginResponse(uid, JwtUtil.createToken(uid, "admin")));
+        } else {
+            return Result.error("用户名或密码不正确");
         }
     }
 
@@ -40,6 +56,7 @@ public class LoginController {
             return Result.error("学生不存在");
         }
     }
+
 
     @GetMapping("/check-token")
     public Result checkToken(String token) {

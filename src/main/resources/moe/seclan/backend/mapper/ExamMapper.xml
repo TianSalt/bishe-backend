@@ -27,6 +27,7 @@
                 and #{toTime} > start_time
             </if>
         </where>
+        order by exam_id desc
     </select>
 
     <update id="update">

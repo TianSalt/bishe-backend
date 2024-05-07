@@ -12,15 +12,6 @@ import java.util.List;
 @Mapper
 public interface ExamQuestionMapper {
 
-    @Select("""
-            SELECT question_id
-            FROM exam_question
-            WHERE exam_id = #{examId}
-            ORDER BY question_index
-            """)
-    List<Integer> getQuestionIdsOfExam(Integer examId);
-
-
     @Insert("""
             INSERT INTO exam_question(question_index, exam_id, question_id, score)
             VALUES (#{questionIndex}, #{examId}, #{questionId}, #{score})""")

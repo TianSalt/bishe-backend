@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,8 +23,14 @@ public class ExamQuestionServiceImpl implements ExamQuestionService {
 
     @Override
     public List<Question> getQuestionsOfExam(Integer examId) {
-        List<Integer> questionIdsOfExam = examQuestionMapper.getQuestionIdsOfExam(examId);
-        return questionIdsOfExam.stream().map(questionMapper::getById).toList();
+        List<ExamQuestion> examQuestions = examQuestionMapper.get(examId, null);
+        List<Question> questions = new ArrayList<>();
+        for (ExamQuestion examQuestion : examQuestions) {
+            Question question = questionMapper.getById(examQuestion.getQuestionId());
+            question.setScore(examQuestion.getScore());
+            questions.add(question);
+        }
+        return questions;
     }
 
     @Override
@@ -40,6 +47,8 @@ public class ExamQuestionServiceImpl implements ExamQuestionService {
 
     @Override
     public void update(ExamQuestion examQuestion) {
+        if (examQuestion.getScore() == null)
+            examQuestion.setScore(BigDecimal.ZERO);
         examQuestionMapper.update(examQuestion);
     }
 

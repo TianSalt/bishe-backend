@@ -10,6 +10,8 @@ import java.util.List;
 @Mapper
 public interface StudentExamMapper {
 
+    List<StudentExam> get(Integer studentUid, Integer examId, Boolean presence);
+
     @Select("""
             SELECT s.*
             FROM student s
@@ -26,7 +28,7 @@ public interface StudentExamMapper {
     @Select("""
             SELECT e.*
             FROM exam e
-            WHERE e.exam_id IN (
+            WHERE e.is_published = true and e.exam_id IN (
                 SELECT se.exam_id
                 FROM student_exam se
                 WHERE se.student_uid = #{studentUid}

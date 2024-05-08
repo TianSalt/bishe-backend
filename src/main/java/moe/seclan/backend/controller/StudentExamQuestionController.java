@@ -7,6 +7,7 @@ import moe.seclan.backend.service.StudentExamQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @CrossOrigin
@@ -19,9 +20,9 @@ public class StudentExamQuestionController {
     private StudentExamQuestionService studentExamQuestionService;
 
     @PostMapping
-    public Result insert(@RequestBody StudentExamQuestion studentExamQuestion) {
-        log.info("INSERT studentExamQuestion: {}", studentExamQuestion);
-        studentExamQuestionService.insert(studentExamQuestion);
+    public Result answer(@RequestBody StudentExamQuestion studentExamQuestion) {
+        log.info("ANSWERS: {}", studentExamQuestion);
+        studentExamQuestionService.answer(studentExamQuestion);
         return Result.success();
     }
 
@@ -33,25 +34,28 @@ public class StudentExamQuestionController {
         return Result.success();
     }
 
-    @PutMapping
-    public Result update(@RequestBody StudentExamQuestion studentExamQuestion) {
-        log.info("UPDATE {}", studentExamQuestion);
-        studentExamQuestionService.update(studentExamQuestion);
-        return Result.success();
-    }
+//    @PutMapping
+//    public Result update(@RequestBody StudentExamQuestion studentExamQuestion) {
+//        log.info("UPDATE {}", studentExamQuestion);
+//        studentExamQuestionService.update(studentExamQuestion);
+//        return Result.success();
+//    }
 
     @GetMapping
-    public Result get(Integer studentUid, Integer examId, Integer questionId) {
+    public Result get(Integer studentUid, Integer examId, Integer questionIndex) {
         log.info("GET question {} in exam {} by taken uid {}",
-                questionId, examId, studentUid);
+                questionIndex, examId, studentUid);
         List<StudentExamQuestion> list
-                =  studentExamQuestionService.get(studentUid, examId, questionId);
+                =  studentExamQuestionService.get(studentUid, examId, questionIndex);
         return Result.success(list);
     }
 
     @GetMapping("/sum-score")
     public Result sumScore(Integer studentUid, Integer examId) {
-        return Result.success(studentExamQuestionService.sumScore(studentUid, examId));
+        log.info("sum-score uid {} in exam {}", studentUid, examId);
+        BigDecimal sum = studentExamQuestionService.sumScore(studentUid, examId);
+        log.info("sum-score score: {}", sum);
+        return Result.success(sum);
     }
 
 }

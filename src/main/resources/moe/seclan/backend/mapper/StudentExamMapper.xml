@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="moe.seclan.backend.mapper.StudentExamMapper">
+    <select id="get" resultType="moe.seclan.backend.pojo.StudentExam">
+        select *
+        from student_exam
+        <where>
+            <if test="studentUid != null">
+                student_uid = #{studentUid}
+            </if>
+            <if test="examId != null">
+                and exam_id = #{examId}
+            </if>
+            <if test="presence != null">
+                and presence = #{presence}
+            </if>
+        </where>
+        order by exam_id desc
+    </select>
+</mapper>

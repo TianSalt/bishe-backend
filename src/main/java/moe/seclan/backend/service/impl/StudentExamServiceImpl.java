@@ -48,4 +48,9 @@ public class StudentExamServiceImpl implements StudentExamService {
         return studentExamMapper.getStudentsInExam(examId);
     }
 
+    @Override
+    public List<StudentExam> get(Integer studentUid, Integer examId, Boolean presence) {
+        return studentExamMapper.get(studentUid, examId, presence);
+    }
+
 }

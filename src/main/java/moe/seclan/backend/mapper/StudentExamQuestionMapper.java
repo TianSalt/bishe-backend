@@ -13,24 +13,24 @@ import java.util.List;
 @Mapper
 public interface StudentExamQuestionMapper {
 
-    List<StudentExamQuestion> get(Integer studentId, Integer examId, Integer questionIndex);
+    List<StudentExamQuestion> get(Integer studentUid, Integer examId, Integer questionIndex);
 
     void update(StudentExamQuestion studentExamQuestion);
 
     @Select("""
             SELECT SUM(score) FROM student_exam_question
-            WHERE student_uid = #{studentId} AND exam_id = #{examId}""")
+            WHERE student_uid = #{studentUid} AND exam_id = #{examId}""")
     BigDecimal sumScore(Integer studentUid, Integer examId);
 
     @Insert("""
-            INSERT INTO student_exam_question (student_uid, exam_id, question_index, answer)
-            VALUES (#{studentUid}, #{examId}, #{questionIndex}, #{answer})
+            INSERT INTO student_exam_question (student_uid, exam_id, question_index, answer, score)
+            VALUES (#{studentUid}, #{examId}, #{questionIndex}, #{answer}, #{score})
             """)
     void insert(StudentExamQuestion studentExamQuestion);
 
     @Delete("""
             DELETE FROM student_exam_question
-            WHERE student_uid = #{studentId}
+            WHERE student_uid = #{studentUid}
                 AND exam_id = #{examId}
                 AND question_index = #{questionIndex}""")
     void delete(Integer studentUid, Integer examId, Integer questionIndex);

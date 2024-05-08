@@ -18,5 +18,7 @@ public interface StudentExamQuestionService {
 
     BigDecimal sumScore(Integer studentUid, Integer examId);
 
-    List<StudentExamQuestion> get(Integer studentUid, Integer examId, Integer questionId);
+    List<StudentExamQuestion> get(Integer studentUid, Integer examId, Integer questionIndex);
+
+    void answer(StudentExamQuestion studentExamQuestion);
 }

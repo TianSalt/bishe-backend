@@ -51,9 +51,10 @@ public class LoginController {
         log.info("Login student {} {}", loginInput.getItem1(), loginInput.getItem2());
         Student student = studentService.login(loginInput.getItem1(), loginInput.getItem2());
         if (student != null) {
-            return Result.success(student.getUid());
+            Integer uid = student.getUid();
+            return Result.success(new LoginResponse(uid, JwtUtil.createToken(uid, "student")));
         } else {
-            return Result.error("学生不存在");
+            return Result.error("姓名或学号不正确");
         }
     }
 

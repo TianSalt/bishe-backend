@@ -21,4 +21,6 @@ public interface StudentExamService {
     void present(StudentExam studentExam);
 
     List<Student> getStudentsInExam(Integer examId);
+
+    List<StudentExam> get(Integer studentUid, Integer examId, Boolean presence);
 }

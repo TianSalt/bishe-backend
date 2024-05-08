@@ -23,9 +23,9 @@ public class StudentExamController {
     }
 
     @GetMapping
-    public Result getPresence(Integer studentUid, Integer examId) {
-        log.info("GET PRESENCE studentUid: {}, examId: {}", studentUid, examId);
-        return Result.success(studentExamService.getPresence(studentUid, examId));
+    public Result get(Integer studentUid, Integer examId, Boolean presence) {
+        log.info("GET student exam id: {} presence: {} by {}", examId, presence, studentUid);
+        return Result.success(studentExamService.get(studentUid, examId, presence));
     }
 
     @GetMapping("/list")

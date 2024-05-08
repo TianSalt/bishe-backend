@@ -7,10 +7,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
 
-@SpringBootTest
+//@SpringBootTest
 class BackendApplicationTests {
 
     private String signature = "signature";
@@ -48,6 +49,11 @@ class BackendApplicationTests {
         Exam exam = new Exam(null, 57, null, null, null, null, null);
         examMapper.insert(exam);
         System.out.println(exam.getExamId());
+    }
+
+    @Test
+    void testDecimal() {
+        System.out.println(BigDecimal.valueOf(0.2000000000000000000000000000000000000001));
     }
 
 }

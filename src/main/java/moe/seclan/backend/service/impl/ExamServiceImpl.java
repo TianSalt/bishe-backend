@@ -20,12 +20,12 @@ public class ExamServiceImpl implements ExamService {
     @Autowired
     private TeacherMapper teacherMapper;
 
-    private LocalDateTime gmtToLocal(LocalDateTime gmtDateTime) {
-        ZoneId currentZone = ZoneId.systemDefault();
-        ZonedDateTime currentZonedDateTime = gmtDateTime.atZone(ZoneId.of("GMT"))
-                .withZoneSameInstant(currentZone);
-        return currentZonedDateTime.toLocalDateTime();
-    }
+//    private LocalDateTime gmtToLocal(LocalDateTime gmtDateTime) {
+//        ZoneId currentZone = ZoneId.systemDefault();
+//        ZonedDateTime currentZonedDateTime = gmtDateTime.atZone(ZoneId.of("GMT"))
+//                .withZoneSameInstant(currentZone);
+//        return currentZonedDateTime.toLocalDateTime();
+//    }
 
     @Autowired
     private ExamMapper examMapper;
@@ -37,10 +37,6 @@ public class ExamServiceImpl implements ExamService {
         List<Exam> finalExams = new ArrayList<>();
         for (Exam exam : exams) {
             Exam newExam = new Exam(exam);
-            if (newExam.getStartTime() != null)
-                newExam.setStartTime(gmtToLocal(newExam.getStartTime()));
-            if (exam.getEndTime() != null)
-                newExam.setEndTime(gmtToLocal(newExam.getEndTime()));
             Teacher creatorTeacher = teacherMapper.getByUid(exam.getCreator());
             newExam.setCreatorName(creatorTeacher.getName());
             finalExams.add(newExam);

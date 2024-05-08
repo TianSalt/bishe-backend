@@ -57,7 +57,16 @@ public class StudentExamQuestionServiceImpl implements StudentExamQuestionServic
 
     @Override
     public List<StudentExamQuestion> get
-            (Integer studentUid, Integer examId, Integer questionId) {
-        return studentExamQuestionMapper.get(studentUid, examId, questionId);
+            (Integer studentUid, Integer examId, Integer questionIndex) {
+        return studentExamQuestionMapper.get(studentUid, examId, questionIndex);
+    }
+
+    @Override
+    public void answer(StudentExamQuestion studentExamQuestion) {
+        studentExamQuestion.setScore(mark(studentExamQuestion));
+        if (studentExamQuestionMapper.get(studentExamQuestion.getStudentUid(), studentExamQuestion.getExamId(), studentExamQuestion.getQuestionIndex()).isEmpty())
+            studentExamQuestionMapper.insert(studentExamQuestion);
+        else
+            studentExamQuestionMapper.update(studentExamQuestion);
     }
 }

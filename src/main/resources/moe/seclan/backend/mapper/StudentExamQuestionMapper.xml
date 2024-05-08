@@ -8,29 +8,26 @@
     <select id="get" resultType="moe.seclan.backend.pojo.StudentExamQuestion">
         SELECT * FROM student_exam_question
         <where>
-            <if test="studentId != null">
+            <if test="studentUid != null">
                 student_uid = #{studentUid}
             </if>
             <if test="examId != null">
                 and exam_id = #{examId}
             </if>
-            <if test="questionId != null">
+            <if test="questionIndex != null">
                 and question_index = #{questionIndex}
             </if>
         </where>
+        order by question_index
     </select>
 
     <update id="update">
         UPDATE student_exam_question
-        <set>
-            <if test="answer != null">
-                answer = #{answer},
-            </if>
-            <if test="score != null">
-                score = #{score}
-            </if>
-        </set>
-        WHERE student_uid = #{studentUid} AND exam_id = #{examId} AND question_index = #{questionIndex}
+        set answer = #{answer},
+            score  = #{score}
+        WHERE student_uid = #{studentUid}
+          AND exam_id = #{examId}
+          AND question_index = #{questionIndex}
     </update>
 
 </mapper>

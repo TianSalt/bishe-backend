@@ -19,6 +19,7 @@ public class Exam {
     private String introduction;
     private String creatorName;
 
+
     public Exam(Integer examId, Integer creator, Boolean isPublished, String title, LocalDateTime startTime, LocalDateTime endTime, String introduction) {
         this.examId = examId;
         this.creator = creator;

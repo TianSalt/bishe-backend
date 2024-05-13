@@ -17,6 +17,7 @@ public class JwtUtil {
                 .setHeaderParam("typ", "JWT")
                 .claim("uid", uid)
                 .claim("role", role)
+                .setSubject("exam-system")
                 .setId(UUID.randomUUID().toString())
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7))
                 .signWith(SignatureAlgorithm.HS256, signature)

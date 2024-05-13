@@ -28,10 +28,6 @@ public interface AdminMapper {
             WHERE uid = #{uid}""")
     Integer update(Admin admin);
 
-    @Select("""
-            SELECT * FROM admin
-            WHERE (username = #{username})
-                  AND password_hash = #{passwordHash}""")
     Admin getByUsernameAndPassword(String username, String passwordHash);
 
 }

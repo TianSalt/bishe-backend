@@ -7,6 +7,8 @@ import moe.seclan.backend.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin
 @Slf4j
 @RestController
@@ -25,31 +27,53 @@ public class StudentController {
 
     @GetMapping("/{uid}")
     public Result getByUid(@PathVariable Integer uid) {
-        log.info("GET student by id: {}", uid);
+        log.info("GET student by uid: {}", uid);
         return Result.success(studentService.getByUid(uid));
     }
 
-    @DeleteMapping("/{uid}")
-    public Result delete(@PathVariable Integer uid) {
-        log.info("DELETE student with uid {}", uid);
-        studentService.delete(uid);
+    @DeleteMapping("/{uids}")
+    public Result delete(@PathVariable List<Integer> uids) {
+        log.info("DELETE student with uid {}", uids);
+        studentService.delete(uids);
         return Result.success();
     }
 
     @PostMapping
     public Result insert(@RequestBody Student student) {
         log.info("ADD student {}", student);
-        if (studentService.insert(student) == 0)
-            return Result.error("该学号已存在");
-        else return Result.success();
+        try {
+            studentService.insert(student);
+        } catch (Exception e) {
+            return Result.error("该学号已存在或服务器异常");
+        }
+        return Result.success();
+    }
+
+    @PostMapping("/all")
+    public Result insertAll(@RequestBody List<Student> students) {
+        log.info("INSERT students {}", students);
+        int succeed = 0, failed = 0;
+        for (Student student : students) {
+            try {
+                studentService.insert(student);
+            } catch (Exception e) {
+                failed++;
+                continue;
+            }
+            succeed++;
+        }
+        return Result.success("成功 " + succeed + " 个，失败 " + failed + " 个");
     }
 
     @PutMapping
     public Result update(@RequestBody Student student) {
         log.info("UPDATE student {}", student);
-        if (studentService.update(student) == 0)
-            return Result.error("该学号已存在");
-        else return Result.success();
+        try {
+            studentService.update(student);
+        } catch (Exception e) {
+            return Result.error("该学号已存在或服务器异常");
+        }
+        return Result.success();
     }
 
 }

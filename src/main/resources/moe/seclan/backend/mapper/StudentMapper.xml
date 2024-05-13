@@ -22,4 +22,25 @@
             </if>
         </where>
     </select>
+
+    <select id="getBySidAndName" resultType="moe.seclan.backend.pojo.Student">
+        SELECT *
+        FROM student
+        <where>
+            <if test="studentId != null and studentId != ''">
+                student_id = #{studentId}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+        </where>
+    </select>
+
+    <delete id="delete">
+        delete from student where uid in
+        <foreach collection="uids" item="uid" separator="," open="(" close=")">
+            #{uid}
+        </foreach>
+    </delete>
 </mapper>
+

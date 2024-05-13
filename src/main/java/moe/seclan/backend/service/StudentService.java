@@ -10,7 +10,7 @@ public interface StudentService {
 
     Student getByUid(Integer uid);
 
-    void delete(Integer uid);
+    Integer delete(List<Integer> uids);
 
     Integer insert(Student student);
 

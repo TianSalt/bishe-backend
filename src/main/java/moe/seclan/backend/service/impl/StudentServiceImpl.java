@@ -19,8 +19,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void delete(Integer uid) {
-        studentMapper.delete(uid);
+    public Integer delete(List<Integer> uids) {
+        return studentMapper.delete(uids);
     }
 
     @Override

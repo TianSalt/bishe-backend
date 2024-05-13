@@ -16,7 +16,7 @@ class BackendApplicationTests {
 
     private String signature = "signature";
 
-    @Autowired private ExamMapper examMapper;
+//    @Autowired private ExamMapper examMapper;
 
     @Test
     void contextLoads() {
@@ -24,10 +24,10 @@ class BackendApplicationTests {
         String jwtToken = jwtBuilder
                 .setHeaderParam("typ", "JWT")
                 .setHeaderParam("alg", "HS256")
-                .claim("username", "tom")
-                .claim("role", "admin")
-                .setSubject("admin-test")
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
+                .claim("username", "John Smith")
+                .claim("role", "teacher")
+                .setSubject("exam-system")
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 7 * 60 * 60 * 24))
                 .setId(UUID.randomUUID().toString())
                 .signWith(SignatureAlgorithm.HS256, signature)
                 .compact();
@@ -44,12 +44,12 @@ class BackendApplicationTests {
         System.out.println(claimsJws.getBody().getExpiration());
     }
 
-    @Test
-    void useId() {
-        Exam exam = new Exam(null, 57, null, null, null, null, null);
-        examMapper.insert(exam);
-        System.out.println(exam.getExamId());
-    }
+//    @Test
+//    void useId() {
+//        Exam exam = new Exam(null, 57, null, null, null, null, null);
+//        examMapper.insert(exam);
+//        System.out.println(exam.getExamId());
+//    }
 
     @Test
     void testDecimal() {

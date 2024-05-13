@@ -16,12 +16,11 @@ public interface StudentMapper {
     @Select("SELECT * FROM student WHERE uid = #{uid}")
     Student getByUid(Integer uid);
 
-    @Delete("DELETE FROM student WHERE uid = #{uid}")
-    void delete(Integer uid);
+    Integer delete(List<Integer> uids);
 
     @Insert("""
             INSERT INTO student(student_id, name, major, school_class)
-            values (#{studentID}, #{name}, #{major}, #{schoolClass})""")
+            values (#{studentId}, #{name}, #{major}, #{schoolClass})""")
     Integer insert(Student student);
 
     @Update("""
@@ -34,7 +33,6 @@ public interface StudentMapper {
             WHERE
                 uid = #{uid}""")
     Integer update(Student student);
-
-    @Select("SELECT * FROM student WHERE student_id = ${studentId} AND name = #{name}")
+    
     Student getBySidAndName(String studentId, String name);
 }

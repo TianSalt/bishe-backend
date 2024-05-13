@@ -8,6 +8,8 @@ import moe.seclan.backend.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
+
 @CrossOrigin
 @Slf4j
 @RestController
@@ -25,6 +27,8 @@ public class LoginController {
     @PostMapping("/teacher-login")
     public Result teacherLogin(@RequestBody Login loginInput) {
         log.info("Login teacher: {} {}", loginInput.getItem1(), loginInput.getItem2());
+        if (Objects.equals(loginInput.getItem1(), ""))
+            return Result.error("工号或密码不正确");
         Teacher teacher = teacherService.login(loginInput.getItem1(), loginInput.getItem2());
         if (teacher != null) {
             Integer uid = teacher.getUid();
@@ -37,6 +41,8 @@ public class LoginController {
     @PostMapping("/admin-login")
     public Result adminLogin(@RequestBody Login loginInput) {
         log.info("Login admin: {} {}", loginInput.getItem1(), loginInput.getItem2());
+        if (Objects.equals(loginInput.getItem1(), ""))
+            return Result.error("用户名或密码不正确");
         Admin admin = adminService.login(loginInput.getItem1(), loginInput.getItem2());
         if (admin != null) {
             Integer uid = admin.getUid();
@@ -49,6 +55,8 @@ public class LoginController {
     @PostMapping("/student-login")
     public Result studentLogin(@RequestBody Login loginInput) {
         log.info("Login student {} {}", loginInput.getItem1(), loginInput.getItem2());
+        if (Objects.equals(loginInput.getItem1(), ""))
+            return Result.error("姓名或学号不正确");
         Student student = studentService.login(loginInput.getItem1(), loginInput.getItem2());
         if (student != null) {
             Integer uid = student.getUid();

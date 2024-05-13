@@ -32,17 +32,23 @@ public class TeacherController {
     @PostMapping
     public Result insert(@RequestBody Teacher teacher) {
         log.info("POST teacher: {}", teacher);
-        if (teacherService.insert(teacher) == 0)
-            return Result.error("该工号已存在");
-        else return Result.success();
+        try {
+            teacherService.insert(teacher);
+        } catch (Exception e) {
+            return Result.error("该工号已存在或服务器异常");
+        }
+        return Result.success();
     }
 
     @PutMapping
     public Result update(@RequestBody Teacher teacher) {
         log.info("PUT teacher: {}", teacher);
-        if (teacherService.update(teacher) == 0)
-            return Result.error("该工号已存在");
-        else return Result.success();
+        try {
+            teacherService.update(teacher);
+        } catch (Exception e) {
+            return Result.error("该工号已存在或服务器异常");
+        }
+        return Result.success();
     }
 
     @DeleteMapping("/{uid}")

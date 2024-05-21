@@ -36,7 +36,8 @@ public class AdminController {
         else return Result.success();
     }
 
-    public Result update(Admin admin) {
+    @PutMapping
+    public Result update(@RequestBody Admin admin) {
         log.info("update: {}", admin);
         if (adminService.update(admin) == 0)
             return Result.error("该用户名已存在");

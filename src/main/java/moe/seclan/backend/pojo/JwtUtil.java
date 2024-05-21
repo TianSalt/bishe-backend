@@ -25,15 +25,18 @@ public class JwtUtil {
     }
 
 
-    public static Boolean checkToken(String token) {
+    public static boolean checkToken(String token) {
         if (token == null) {
-            return Boolean.FALSE;
+            return false;
         }
         try {
-            Jwts.parser().setSigningKey(signature).parseClaimsJws(token);
+            Claims claims = Jwts.parser().setSigningKey(signature).parseClaimsJws(token).getBody();
+            if (claims.getExpiration().before(new java.util.Date())) {
+                return false;
+            }
         } catch (Exception e) {
-            return Boolean.FALSE;
+            return false;
         }
-        return Boolean.TRUE;
+        return true;
     }
 }
